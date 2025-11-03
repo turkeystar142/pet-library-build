@@ -31,7 +31,7 @@ jobs:
 
       - name: Add cPanel remote
         run: |
-          git remote add cpanel ssh://sparznqj@sparkhub.llc:21098/home/sparznqj/repos/pet-library-build.git || git remote set-url cpanel ssh://sparznqj@sparkhub.llc:21098/home/sparznqj/repos/pet-library-build.git
+          git remote add cpanel ssh://sparznqj@sparkhub.llc:21098/home/sparznqj/repos/pet-library-build || git remote set-url cpanel ssh://sparznqj@sparkhub.llc:21098/home/sparznqj/repos/pet-library-build
 
       - name: Test SSH connection
         run: |
