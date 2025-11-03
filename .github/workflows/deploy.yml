@@ -9,14 +9,35 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout build repo
+        uses: actions/checkout@v4
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.CPANEL_SSH_PRIVATE_KEY }}
 
+      - name: Add SSH host key to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 21098 sparkhub.llc >> ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+          echo "Host key added to known_hosts"
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add cPanel remote
+        run: |
+          git remote add cpanel ssh://sparznqj@sparkhub.llc:21098/home/sparznqj/repos/pet-library-build.git || git remote set-url cpanel ssh://sparznqj@sparkhub.llc:21098/home/sparznqj/repos/pet-library-build.git
+
+      - name: Test SSH connection
+        run: |
+          ssh -p 21098 sparznqj@sparkhub.llc "echo 'SSH connection successful'"
+
       - name: Push to cPanel
         run: |
-          git remote add cpanel  ssh://sparznqj@sparkhub.llc:21098/home/sparznqj/repos/pet-library-build.git
-          git push cpanel main
+          git push cpanel main || git push --force-with-lease cpanel main
+          echo "Successfully pushed to cPanel"
