@@ -1,0 +1,14 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/sparznqj/pets.theproprietor.news/
+    - /bin/cp favicon.ico $DEPLOYPATH
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp main-*.js $DEPLOYPATH
+    - /bin/cp ngsw-worker.js $DEPLOYPATH
+    - /bin/cp ngsw.json $DEPLOYPATH
+    - /bin/cp polyfills-*.js $DEPLOYPATH
+    - /bin/cp safety-worker.js $DEPLOYPATH
+    - /bin/cp styles-*.css $DEPLOYPATH
+    - /bin/cp worker-basic.min.js $DEPLOYPATH
+    - /bin/cp -R assets $DEPLOYPATH
